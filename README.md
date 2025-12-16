@@ -13,4 +13,8 @@ ALSO, the file named *.ino, which is the main file, has to name same as folder, 
   - remember setting of Frequency Adjustment
   - cw messages only, when in cw mode
 
+TIP: for tuning freqency, set VFO A and B to same QRG; VFO A to LSB, VFO B to USB or vice versa; hear with a oscillator(best on 20MHz und up) on tone difference when switching A/B and adjust till difference is not more hearable.
+
+uBITx needs about 20 Minutes in a normal warm room to get its QRG stable - dont adjust before!
+
 This is released under GPL v3 license.
