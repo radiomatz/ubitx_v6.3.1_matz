@@ -609,6 +609,7 @@ void cwToggle(struct Button *b){
   drawCWStatus();
 }
 
+
 void sidebandToggle(struct Button *b){
   if (!strcmp(b->text, "LSB"))
     isUSB = 0;
@@ -620,7 +621,7 @@ void sidebandToggle(struct Button *b){
   btnDraw(&e);
   getButton("LSB", &e);
   btnDraw(&e);
-
+  setFrequency(frequency); // matz; 2025-12-25; if switching without changing freq, old xSB keeps active.
   saveVFOs();
 }
 

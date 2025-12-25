@@ -585,7 +585,7 @@ void switchVFO(int vfoSelect) {
 }
 
 /**
- * The tuning jumps by 50 Hz on each step when you tune slowly
+ * The tuning jumps by 10 Hz on each step when you tune slowly
  * As you spin the encoder faster, the jump size also increases 
  * This way, you can quickly move to another band by just spinning the 
  * tuning knob
@@ -613,17 +613,17 @@ void doTuning() {
 
 
   if (s > 10)
-    frequency += 100l * s; // was: 200
+    frequency += 100l * s;  // was: 200
   else if (s > 5)
-    frequency += 50l * s; // was: 100
+    frequency += 50l * s;  // was: 100
   else if (s > 0)
-    frequency += 10l * s;// was: += 50
+    frequency += 10l * s;  // was: += 50
   else if (s < -10)
-    frequency += 100l * s; // was: 200
+    frequency += 100l * s;  // was: 200
   else if (s < -5)
-    frequency += 50l * s; // was: 100
+    frequency += 50l * s;  // was: 100
   else if (s < 0)
-    frequency += 10l * s; // was: += 50
+    frequency += 10l * s;  // was: += 50
 
   if (prev_freq < 10000000l && frequency > 10000000l)
     isUSB = true;
