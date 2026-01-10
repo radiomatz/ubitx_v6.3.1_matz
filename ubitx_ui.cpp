@@ -326,7 +326,7 @@ void fastTune(){
     encoder = enc_read();
     if (encoder != 0){
  
-      if (encoder > 0 && frequency < 30000000l)
+      if (encoder > 0 && frequency < HIGHEST_FREQ)
         frequency += 50000l;
       else if (encoder < 0 && frequency > 600000l)
         frequency -= 50000l;

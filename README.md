@@ -12,6 +12,8 @@ ALSO, the file named *.ino, which is the main file, has to name same as folder, 
   - finer tuning (10Hz)
   - remember setting of Frequency Adjustment
   - cw messages only, when in cw mode
+  - Frequency tunable down to 1 MHz
+  - no switching to LSB / USB when changing QRG
 
 TIP: for tuning freqency, set VFO A and B to same QRG; VFO A to LSB, VFO B to USB or vice versa; hear with a oscillator(best on 20MHz und up) on tone difference when switching A/B and adjust till difference is not more hearable.
 

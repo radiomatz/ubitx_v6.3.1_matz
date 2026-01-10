@@ -194,10 +194,7 @@ int count = 0;          //to generally count ticks, loops, etc
  */
 
 
-#define INIT_USB_FREQ (11059200l)
-// limits the tuning and working range of the ubitx between 3 MHz and 30 MHz
-#define LOWEST_FREQ (100000l)
-#define HIGHEST_FREQ (30000000l)
+
 
 //we directly generate the CW by programmin the Si5351 to the cw tx frequency, hence, both are different modes
 //these are the parameter passed to startTx
