@@ -3,21 +3,21 @@
  *  
  */
 
-#define ENC_A (A0)          // Tuning encoder interface
-#define ENC_B (A1)          // Tuning encoder interface
-#define FBUTTON (A2)        // Tuning encoder interface
-#define PTT   (A3)          // Sense it for ssb and as a straight key for cw operation
-#define ANALOG_KEYER (A6)   // This is used as keyer. The analog port has 4.7K pull up resistor. Details are in the circuit description on www.hfsignals.com
-#define ANALOG_SPARE (A7)   // Not used yet
+#define ENC_A (A0)         // Tuning encoder interface
+#define ENC_B (A1)         // Tuning encoder interface
+#define FBUTTON (A2)       // Tuning encoder interface
+#define PTT (A3)           // Sense it for ssb and as a straight key for cw operation
+#define ANALOG_KEYER (A6)  // This is used as keyer. The analog port has 4.7K pull up resistor. Details are in the circuit description on www.hfsignals.com
+#define ANALOG_SPARE (A7)  // Not used yet
 
-#define TX_RX (7)           // Pin from the Nano to the radio to switch to TX (HIGH) and RX(LOW)
-#define CW_TONE (6)         // Generates a square wave sidetone while sending the CW. 
-#define TX_LPF_A (5)        // The 30 MHz LPF is permanently connected in the output of the PA... 
-#define TX_LPF_B (4)        //  ...Alternatively, either 3.5 MHz, 7 MHz or 14 Mhz LPFs are...
-#define TX_LPF_C (3)        //  ...switched inline depending upon the TX frequency
-#define CW_KEY (2)          //  Pin goes high during CW keydown to transmit the carrier. 
-                            // ... The CW_KEY is needed in addition to the TX/RX key as the...
-                            // ...key can be up within a tx period
+#define TX_RX (7)     // Pin from the Nano to the radio to switch to TX (HIGH) and RX(LOW)
+#define CW_TONE (6)   // Generates a square wave sidetone while sending the CW.
+#define TX_LPF_A (5)  // The 30 MHz LPF is permanently connected in the output of the PA...
+#define TX_LPF_B (4)  //  ...Alternatively, either 3.5 MHz, 7 MHz or 14 Mhz LPFs are...
+#define TX_LPF_C (3)  //  ...switched inline depending upon the TX frequency
+#define CW_KEY (2)    //  Pin goes high during CW keydown to transmit the carrier. \
+                      // ... The CW_KEY is needed in addition to the TX/RX key as the... \
+                      // ...key can be up within a tx period
 
 
 /** pin assignments
@@ -40,9 +40,9 @@ The model is called tjctm24028-spi
 it uses an ILI9341 display controller and an  XPT2046 touch controller.
 */
 
-#define TFT_DC  9
+#define TFT_DC 9
 #define TFT_CS 10
-#define CS_PIN  8     //this is the pin to select the touch controller on spi interface
+#define CS_PIN 8  //this is the pin to select the touch controller on spi interface
 // MOSI=11, MISO=12, SCK=13
 
 //XPT2046_Touchscreen ts(CS_PIN);
@@ -60,9 +60,9 @@ it uses an ILI9341 display controller and an  XPT2046 touch controller.
  * the input and output from the USB port. We must keep a count of the bytes used while reading
  * the serial port as we can easily run out of buffer space. This is done in the serial_in_count variable.
  */
-extern char c[30], b[30];      
+extern char c[30], b[30];
 extern char printBuff[2][20];  //mirrors what is showing on the two lines of the display
-extern int count;          //to generally count ticks, loops, etc
+extern int count;              //to generally count ticks, loops, etc
 
 /** 
  *  The second set of 16 pins on the Raduino's bottom connector are have the three clock outputs and the digital lines to control the rig.
@@ -96,8 +96,8 @@ extern int count;          //to generally count ticks, loops, etc
 
 //These are defines for the new features back-ported from KD8CEC's software
 //these start from beyond 256 as Ian, KD8CEC has kept the first 256 bytes free for the base version
-#define VFO_A_MODE  256 // 2: LSB, 3: USB
-#define VFO_B_MODE  257
+#define VFO_A_MODE 256  // 2: LSB, 3: USB
+#define VFO_B_MODE 257
 
 //values that are stroed for the VFO modes
 #define VFO_MODE_LSB 2
@@ -123,9 +123,9 @@ extern int count;          //to generally count ticks, loops, etc
  * 11 MHz where its fifth harmonic beats with the arduino's 16 Mhz oscillator's fourth harmonic
  */
 
-#define INIT_USB_FREQ   (11059200l)
+#define INIT_USB_FREQ (11059200l)
 // limits the tuning and working range of the ubitx between 3 MHz and 30 MHz
-#define LOWEST_FREQ   (100000l)
+#define LOWEST_FREQ (100000l)
 #define HIGHEST_FREQ (30000000l)
 
 //we directly generate the CW by programmin the Si5351 to the cw tx frequency, hence, both are different modes
@@ -145,12 +145,12 @@ extern int cwMode;
 
 
 //these are variables that control the keyer behaviour
-extern int cwSpeed; //this is actuall the dot period in milliseconds
+extern int cwSpeed;  //this is actuall the dot period in milliseconds
 extern int32_t calibration;
 extern int cwDelayTime;
 extern bool Iambic_Key;
 
-#define IAMBICB 0x10 // 0 for Iambic A, 1 for Iambic B
+#define IAMBICB 0x10  // 0 for Iambic A, 1 for Iambic B
 extern unsigned char keyerControl;
 //during CAT commands, we will freeeze the display until CAT is disengaged
 extern unsigned char doingCAT;
@@ -159,18 +159,18 @@ extern unsigned char doingCAT;
 /**
  * Raduino needs to keep track of current state of the transceiver. These are a few variables that do it
  */
-extern boolean txCAT;        //turned on if the transmitting due to a CAT command
+extern boolean txCAT;            //turned on if the transmitting due to a CAT command
 extern char inTx;                //it is set to 1 if in transmit mode (whatever the reason : cw, ptt or cat)
-extern int splitOn;             //working split, uses VFO B as the transmit frequency
+extern int splitOn;              //working split, uses VFO B as the transmit frequency
 extern char keyDown;             //in cw mode, denotes the carrier is being transmitted
-extern char isUSB;               //upper sideband was selected, this is reset to the default for the 
-                              //frequency when it crosses the frequency border of 10 MHz
+extern char isUSB;               //upper sideband was selected, this is reset to the default for the
+                                 //frequency when it crosses the frequency border of 10 MHz
 extern byte menuOn;              //set to 1 when the menu is being displayed, if a menu item sets it to zero, the menu is exited
 extern unsigned long cwTimeout;  //milliseconds to go before the cw transmit line is released and the radio goes back to rx mode
 extern unsigned long dbgCount;   //not used now
-extern unsigned char txFilter ;   //which of the four transmit filters are in use
-extern boolean modeCalibrate;//this mode of menus shows extended menus to calibrate the oscillators and choose the proper
-                              //beat frequency
+extern unsigned char txFilter;   //which of the four transmit filters are in use
+extern boolean modeCalibrate;    //this mode of menus shows extended menus to calibrate the oscillators and choose the proper
+                                 //beat frequency
 
 /* these are functions implemented in the main file named as ubitx_xxx.ino */
 void active_delay(int delay_by);
@@ -184,21 +184,21 @@ void checkCAT();
 void cwKeyer(void);
 void switchVFO(int vfoSelect);
 
-int enc_read(void); // returns the number of ticks in a short interval, +ve in clockwise, -ve in anti-clockwise
-int btnDown(); //returns true if the encoder button is pressed
+int enc_read(void);  // returns the number of ticks in a short interval, +ve in clockwise, -ve in anti-clockwise
+int btnDown();       //returns true if the encoder button is pressed
 
 /* these functions are called universally to update the display */
-void updateDisplay(); //updates just the VFO frequency to show what is in 'frequency' variable
-void redrawVFOs();    //redraws only the changed digits of the vfo
-void guiUpdate();     //repaints the entire screen. Slow!!
+void updateDisplay();  //updates just the VFO frequency to show what is in 'frequency' variable
+void redrawVFOs();     //redraws only the changed digits of the vfo
+void guiUpdate();      //repaints the entire screen. Slow!!
 void drawCommandbar(char *text);
 void drawTx();
-//getValueByKnob() provides a reusable dialog box to get a value from the encoder, the prefix and postfix 
+//getValueByKnob() provides a reusable dialog box to get a value from the encoder, the prefix and postfix
 //are useful to concatanate the values with text like "Set Freq to " x " KHz"
-int getValueByKnob(int minimum, int maximum, int step_size,  int initial, char* prefix, char *postfix);
+int getValueByKnob(int minimum, int maximum, int step_size, int initial, char *prefix, char *postfix);
 
 //functions of the setup menu. implemented in seteup.cpp
-void doSetup2(); //main setup function, displays the setup menu, calls various dialog boxes
+void doSetup2();  //main setup function, displays the setup menu, calls various dialog boxes
 void setupBFO();
 void setupFreq();
 
@@ -206,17 +206,17 @@ void setupFreq();
 
 //displays a nice dialog box with a title and instructions as footnotes
 void displayDialog(char *title, char *instructions);
-void printCarrierFreq(unsigned long freq); //used to display the frequency in the command area (ex: fast tuning)
+void printCarrierFreq(unsigned long freq);  //used to display the frequency in the command area (ex: fast tuning)
 
 void enc_setup(void);
 int enc_read(void);
 
 //main functions to check if any button is pressed and other user interface events
 void doCommands();  //does the commands with encoder to jump from button to button
-void  checkTouch(); //does the commands with a touch on the buttons
+void checkTouch();  //does the commands with a touch on the buttons
 
 
 /* these are functiosn implemented in ubitx_si5351.cpp */
 void si5351bx_setfreq(uint8_t clknum, uint32_t fout);
 void initOscillators();
-void si5351_set_calibration(int32_t cal); //calibration is a small value that is nudged to make up for the inaccuracies of the reference 25 MHz crystal frequency 
+void si5351_set_calibration(int32_t cal);  //calibration is a small value that is nudged to make up for the inaccuracies of the reference 25 MHz crystal frequency
