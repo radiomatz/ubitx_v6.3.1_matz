@@ -211,7 +211,7 @@ unsigned long firstIF = 45005000L;
 
 // if cwMode is flipped on, the rx frequency is tuned down by sidetone hz instead of being zerobeat
 int cwMode = 0;
-
+boolean finetune = false;
 
 //these are variables that control the keyer behaviour
 int cwSpeed = 100;  //this is actuall the dot period in milliseconds
@@ -260,21 +260,13 @@ void active_delay(int delay_by) {
 
 void saveVFOs() {
 
-  if (vfoActive == VFO_A)
-    EEPROM.put(VFO_A, frequency);
-  else
-    EEPROM.put(VFO_A, vfoA);
-
+  EEPROM.put(VFO_A, vfoA);
   if (isUsbVfoA)
     EEPROM.put(VFO_A_MODE, VFO_MODE_USB);
   else
     EEPROM.put(VFO_A_MODE, VFO_MODE_LSB);
 
-  if (vfoActive == VFO_B)
-    EEPROM.put(VFO_B, frequency);
-  else
-    EEPROM.put(VFO_B, vfoB);
-
+  EEPROM.put(VFO_B, vfoB);
   if (isUsbVfoB)
     EEPROM.put(VFO_B_MODE, VFO_MODE_USB);
   else
@@ -537,8 +529,8 @@ void checkButton() {
   }
   active_delay(100);
 
-
   doCommands();
+
   //wait for the button to go up again
   while (btnDown())
     active_delay(10);
@@ -575,7 +567,6 @@ void switchVFO(int vfoSelect) {
     frequency = vfoB;
     isUSB = isUsbVfoB;
   }
-
   setFrequency(frequency);
   redrawVFOs();
   saveVFOs();
@@ -608,7 +599,13 @@ void doTuning() {
   doingCAT = 0;  // go back to manual mode if you were doing CAT
   prev_freq = frequency;
 
+  if (finetune) /* matz */
+    frequency += s * 10L;
+  else
+    frequency += s * 1000L;
 
+
+  /*
   if (s > 10)
     frequency += 100l * s;  // was: 200
   else if (s > 5)
@@ -621,14 +618,18 @@ void doTuning() {
     frequency += 50l * s;  // was: 100
   else if (s < 0)
     frequency += 10l * s;  // was: += 50
+  matz */
 
+  /*
   if (prev_freq < 10000000l && frequency > 10000000l)
     isUSB = true;
 
   if (prev_freq > 10000000l && frequency < 10000000l)
     isUSB = false;
+  matz */
 
   setFrequency(frequency);
+  
 }
 
 
@@ -642,9 +643,9 @@ void doRIT() {
   unsigned long old_freq = frequency;
 
   if (knob < 0)
-    frequency -= 100l;
+    frequency -= 10l;
   else if (knob > 0)
-    frequency += 100;
+    frequency += 10;
 
   if (old_freq != frequency) {
     setFrequency(frequency);
@@ -796,7 +797,7 @@ void setup() {
     setupBFO();
   }
   guiUpdate();
-  displayRawText("m6.1", 270, 210, DISPLAY_LIGHTGREY, DISPLAY_NAVY);
+  displayRawText("DM2HR 6.3.1", 150, 210, DISPLAY_LIGHTGREY, DISPLAY_NAVY);
 }
 
 

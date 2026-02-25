@@ -267,6 +267,10 @@ void processCATCommand2(byte* cmd) {
       //set frequency
       f = readFreq(cmd);
       setFrequency(f);
+      if (vfoActive == VFO_A)
+        vfoA = f;
+      else
+        vfoB = f;
       updateDisplay();
       response[0] = 0;
       Serial.write(response, 1);
@@ -337,6 +341,7 @@ void processCATCommand2(byte* cmd) {
         switchVFO(VFO_A);
       //menuVfoToggle(1); // '1' forces it to change the VFO
       Serial.write(response, 1);
+      saveVFOs();
       updateDisplay();
       break;
 

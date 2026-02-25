@@ -142,7 +142,7 @@ extern unsigned long firstIF;
 
 // if cwMode is flipped on, the rx frequency is tuned down by sidetone hz instead of being zerobeat
 extern int cwMode;
-
+extern boolean finetune;
 
 //these are variables that control the keyer behaviour
 extern int cwSpeed;  //this is actuall the dot period in milliseconds

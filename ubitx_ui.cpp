@@ -28,12 +28,12 @@ const struct Button btn_set[MAX_BUTTONS] PROGMEM = {
   { 0, 80, 60, 36, "RIT", "R" },
   { 64, 80, 60, 36, "USB", "U" },
   { 128, 80, 60, 36, "LSB", "L" },
-  { 192, 80, 60, 36, "CW", "M" },
+  { 192, 80, 60, 36, "FIN", "X" },
   { 256, 80, 60, 36, "SPL", "S" },
 
-  { 0, 120, 60, 36, "80", "8" },
-  { 64, 120, 60, 36, "40", "4" },
-  { 128, 120, 60, 36, "30", "3" },
+  { 0, 120, 60, 36, "A/B", "/" },
+  { 64, 120, 60, 36, "A=B", "=" },
+  { 128, 120, 60, 36, "40", "4" },
   { 192, 120, 60, 36, "20", "2" },
   { 256, 120, 60, 36, "17", "7" },
 
@@ -297,13 +297,13 @@ void fastTune() {
     active_delay(50);
   active_delay(300);
 
-  displayRawText("Fast tune", 100, 55, DISPLAY_CYAN, DISPLAY_NAVY);
+  displayText("fast tune", 10, 50, 200, 20, DISPLAY_CYAN, DISPLAY_NAVY, 0);
   while (1) {
     checkCAT();
 
     //exit after debouncing the btnDown
     if (btnDown()) {
-      displayFillrect(100, 55, 120, 30, DISPLAY_NAVY);
+      displayFillrect(10, 50, 200, 20, DISPLAY_NAVY);
 
       //wait until the button is realsed and then return
       while (btnDown())
@@ -315,10 +315,11 @@ void fastTune() {
     encoder = enc_read();
     if (encoder != 0) {
 
+      /* matz */
       if (encoder > 0 && frequency < HIGHEST_FREQ)
-        frequency += 50000l;
+        frequency += 5000L;
       else if (encoder < 0 && frequency > 600000l)
-        frequency -= 50000l;
+        frequency -= 5000L;
       setFrequency(frequency);
       displayVFO(vfoActive);
     }
@@ -554,12 +555,20 @@ void splitToggle(struct Button *b) {
   displayVFO(VFO_B);
 }
 
-void vfoReset() {
+void vfoToggle() {
   Button b;
-  if (vfoActive = VFO_A)
+
+  if (vfoActive == VFO_A) {
+    frequency = vfoB;
     vfoB = vfoA;
-  else
+    vfoA = frequency;
+    setFrequency(vfoA);
+  } else {
+    frequency = vfoA;
     vfoA = vfoB;
+    vfoB = frequency;
+    setFrequency(vfoB);
+  }
 
   if (splitOn) {
     getButton("SPL", &b);
@@ -578,6 +587,27 @@ void vfoReset() {
 
   saveVFOs();
 }
+
+
+void vfoEqual() {
+
+  if (vfoActive == VFO_A) {
+    vfoB = vfoA;
+    setFrequency(vfoA);
+  }
+  else {
+    vfoA = vfoB;
+    setFrequency(vfoB);
+  }
+
+  memset(vfoDisplay, 0, sizeof(vfoDisplay));
+  displayVFO(VFO_A);
+  memset(vfoDisplay, 0, sizeof(vfoDisplay));
+  displayVFO(VFO_B);
+
+  saveVFOs();
+}
+
 
 void cwToggle(struct Button *b) {
   if (cwMode == 0) {
@@ -724,8 +754,11 @@ void doCommand(struct Button *b) {
       fastTune();
     else
       switchVFO(VFO_B);
-  } else if (!strcmp(b->text, "A=B"))
-    vfoReset();
+  } else if (!strcmp(b->text, "A/B")) {
+    vfoToggle();
+  } else if (!strcmp(b->text, "A=B")) {
+    vfoEqual();
+  }
   else if (!strcmp(b->text, "80"))
     switchBand(3500000l);
   else if (!strcmp(b->text, "40"))
@@ -738,7 +771,7 @@ void doCommand(struct Button *b) {
     switchBand(18000000l);
   else if (!strcmp(b->text, "15"))
     switchBand(21000000l);
-  else if (!strcmp(b->text, "13"))
+  else if (!strcmp(b->text, "12"))
     switchBand(24800000l);
   else if (!strcmp(b->text, "10"))
     switchBand(28000000l);
@@ -748,6 +781,16 @@ void doCommand(struct Button *b) {
     setCwSpeed();
   else if (!strcmp(b->text, "TON"))
     setCwTone();
+  else if (!strcmp(b->text, "FIN")) {
+    /* matz */
+    if ( !finetune ) {
+      finetune = true;
+     displayText("fine tune", 10, 50, 200, 20, DISPLAY_CYAN, DISPLAY_NAVY, 0);
+    } else {
+      finetune = false;
+     displayText("norm tune", 10, 50, 200, 20, DISPLAY_CYAN, DISPLAY_NAVY, 0);
+    }
+  }
 }
 
 void checkTouch() {

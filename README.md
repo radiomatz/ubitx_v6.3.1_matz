@@ -1,8 +1,9 @@
-# ubitxv6.1m
+# ubitxv6.3.1m
 uBitx v6.3.1m Arduino sketch
+
 IMPORTANT: It will compile only if you place this in the Arduino's own sketch directory! This is because of the restricted places that the Arduino searches for it's include files (the headers).
 
-ALSO, the file named *.ino, which is the main file, has to name same as folder, bla.ino -> folder bla.
+ALSO, the file named *.ino, which is the main file, has to name same as folder, bla.ino -> bla/bla.ino
 
 - This is refactored to remove dependencies on any library except the standard Arduino libraries of SPI, I2C, EEPROM, etc.
 - This works with ILI9341 display controller. The pins used by the TFT display are the same as that of the 16x2 LCD display of the previous versions.
@@ -15,9 +16,12 @@ ALSO, the file named *.ino, which is the main file, has to name same as folder, 
   - Frequency tunable down to 1 MHz
   - no switching to LSB / USB when changing QRG
   - Bugfix: there was no reaction, when only changing from USB to LSB and vs.
+  - changed fast/fine tuning: press knob for fine tuning, else tuning +/- 1kHz as standard without going faster
+  - corrected behavior of VFO A=B, VFO A/B
+  - Tuning now: Standard 1k with knob, Button FIN for fine tuning with 10 Hz 
 
 TIP: for tuning freqency, set VFO A and B to same QRG; VFO A to LSB, VFO B to USB or vice versa; hear with a oscillator(best on 20MHz und up) on tone difference when switching A/B and adjust till difference is not more hearable.
 
 uBITx needs about 20 Minutes in a normal warm room to get its QRG stable - dont adjust before!
 
-This is released under GPL v3 license.
+This is released under GPL v3 license (as the original was).
